@@ -1,4 +1,5 @@
 import express from "express";
+import exphbs from "express-handlebars";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -24,8 +25,12 @@ db.once("open", () => {
   console.log("mongodb connected!");
 });
 
+app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: ".hbs" }));
+app.set("view engine", "hbs");
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
-  res.send("hello word");
+  res.render('index')
 });
 
 app.listen(3000, () => {
