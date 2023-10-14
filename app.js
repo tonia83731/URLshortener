@@ -2,6 +2,9 @@ import express from "express";
 import exphbs from "express-handlebars";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import URLgenerator from "./url_generator.js";
+import URL from "./models/url.js";
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
@@ -27,10 +30,22 @@ db.once("open", () => {
 
 app.engine("hbs", exphbs.engine({ defaultLayout: "main", extname: ".hbs" }));
 app.set("view engine", "hbs");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.render('index')
+  res.render("index");
+});
+app.get("/output", (req, res) => {
+ res.render("output");
+})
+app.post("/generate", (req, res) => {
+  const url = req.body.url
+  const shortenUrl = URLgenerator()
+  
+  // URL.create({
+  //   url, shortenUrl
+  // })
 });
 
 app.listen(3000, () => {
