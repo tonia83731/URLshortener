@@ -1,4 +1,19 @@
-<form action="/generate" method="POST" class="w-50 d-flex flex-column align-items-center">
+<form action="/" method="POST" class="w-50 d-flex flex-column align-items-center">
   <input type="url" name="url" placeholder="Input URL here..." class="form-control">
   <button type="submit" class="btn btn-outline-primary mt-3 w-25">Shorten</button>
 </form>
+
+{{#if shortenUrl}}
+  <div class="d-flex justify-content-between align-items-center mt-5">
+    <a href="{{origin}}/{{shortenUrl}}" class="text-decoration-none"><strong id="generateUrl">{{origin}}/{{shortenUrl}}</strong></a>
+    <span class="mx-2"></span>
+    <button class="btn btn-primary" onClick="copyLink()">Copy</button>
+  </div>
+  <script>
+    function copyLink(){
+      const url = document.getElementById('generateUrl')
+      navigator.clipboard.writeText(url.innerText)
+      alert('URL copy!')
+    }
+  </script>
+{{/if}}
